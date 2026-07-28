@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 17 Global Goals · F-SDG Foundation</title>
+<meta name="description" content="Browse all seventeen UN Sustainable Development Goals and the Foundation's projects under each.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="styles.css" rel="stylesheet">
+</head>
+<body data-render="sdg-grid">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="mono">F</span>
+      <span class="bt"><b>F&middot;SDG&nbsp;Foundation</b><span>企业家SDGs赋能基金会</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#mission">Mission</a>
+      <a href="sdgs.html">The 17 Goals</a>
+      <a href="index.html#network">Network</a>
+      <a href="submit.html">Submit a project</a>
+    </nav>
+    <a class="nav-cta" href="index.html#membership">Become a member</a>
+  </div>
+</header>
+
+<section class="band-ink on-dark pagetop" style="padding-bottom:36px">
+  <div class="wrap">
+    <div class="eyebrow"><span class="seal">标</span><span class="zh" style="color:var(--gold)">可持续发展目标</span><span class="en">The 17 Global Goals</span></div>
+    <h2 class="sec-title" style="margin-top:22px">Seventeen goals. <em>One architecture of action.</em></h2>
+    <p class="sec-lead">Every venture the Foundation backs is mapped to a UN Sustainable Development Goal. Choose a goal to see its projects — and to donate, join, enquire, or submit your own.</p>
+  </div>
+</section>
+
+<section class="band-ink on-dark" style="padding-top:8px">
+  <div class="wrap">
+    <div class="sdg-grid" id="sdg-grid"><!-- rendered by app.js --></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div><a class="dom" href="https://www.f-sdg.org">www.F-SDG.ORG</a>
+      <div style="margin-top:6px;font-size:13px">&copy; 2026 Entrepreneurs SDGs Empowerment Foundation.</div></div>
+    <div style="font-family:var(--cjk-serif);letter-spacing:.12em">乾元用九 &middot; 泽被苍生</div>
+  </div>
+</footer>
+
+<script src="sdg-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

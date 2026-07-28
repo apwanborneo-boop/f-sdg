@@ -378,6 +378,7 @@
       <a href="#mission">Mission</a>
       <a href="#architecture">Architecture</a>
       <a href="#programs">Programs</a>
+      <a href="sdgs.html">The 17 Goals</a>
       <a href="#network">Network</a>
       <a href="#membership">Membership</a>
     </nav>
@@ -525,23 +526,52 @@
 
 <!-- ================= SDG ================= -->
 <section class="band band-paper-2" id="sdg">
-  <div class="wrap sdg-grid">
-    <div class="reveal">
-      <div class="sec-head" style="margin-bottom:32px">
+  <div class="wrap">
+    <div class="reveal" style="max-width:760px;margin-bottom:44px">
+      <div class="sec-head" style="margin-bottom:22px">
         <div class="eyebrow"><span class="seal">续</span><span class="zh">可持续</span><span class="en">SDG commitment</span></div>
-        <h2 class="sec-title">Aligned to the Global Goals, delivered by <em>entrepreneurs.</em></h2>
       </div>
-      <p class="sec-lead" style="margin-top:0">Every venture we back is measured against the United Nations Sustainable Development Goals. Our priority is to put entrepreneurial capital and energy where the gaps are widest — and to make the SDGs something a founder can act on, not just admire.</p>
-      <p class="sdg-all">Four goals lead the agenda, but the work spans <b>all seventeen Global Goals.</b></p>
+      <h2 class="sec-title">Aligned to the Global Goals, delivered by <em>entrepreneurs.</em></h2>
+      <p class="sec-lead">Every venture we back is measured against the United Nations Sustainable Development Goals. We put entrepreneurial capital and energy where the gaps are widest — and make the SDGs something a founder can act on, not just admire.</p>
+      <p class="sdg-all">Choose any of the <b>seventeen Global Goals</b> below to see its projects — and to donate, join, enquire, or submit your own.</p>
     </div>
-    <div class="sdg-goals reveal">
-      <div class="goal"><div class="num" style="background:#E5243B">1</div><div class="tx"><b>No Poverty</b><span>SDG 1</span></div></div>
-      <div class="goal"><div class="num" style="background:#C5192D">4</div><div class="tx"><b>Quality Education</b><span>SDG 4</span></div></div>
-      <div class="goal"><div class="num" style="background:#A21942">8</div><div class="tx"><b>Decent Work &amp; Growth</b><span>SDG 8</span></div></div>
-      <div class="goal"><div class="num" style="background:#3F7E44">13</div><div class="tx"><b>Climate Action</b><span>SDG 13</span></div></div>
+    <div class="sdg-grid-17 reveal" id="home-sdg-grid"><!-- rendered by app.js --></div>
+    <div class="reveal" style="margin-top:34px;display:flex;flex-wrap:wrap;gap:14px">
+      <a class="btn btn-primary" href="sdgs.html">Explore all 17 goals &rarr;</a>
+      <a class="btn btn-ghost" href="submit.html" style="color:var(--text);box-shadow:inset 0 0 0 1px rgba(20,34,47,.22)">Submit a project</a>
     </div>
   </div>
 </section>
+
+<style>
+  .sdg-grid-17{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .sdg-grid-17 .sdg-tile{display:flex;gap:14px;align-items:flex-start;background:var(--paper);border:1px solid var(--paper-2);border-radius:6px;padding:16px 18px;transition:transform .25s,box-shadow .25s,border-color .25s;text-decoration:none}
+  .sdg-grid-17 .sdg-tile:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(10,20,30,.14);border-color:rgba(194,162,76,.5)}
+  .sdg-grid-17 .sdg-num{width:46px;height:46px;flex:none;border-radius:8px;color:#fff;font-family:var(--serif);font-weight:600;font-size:21px;display:flex;align-items:center;justify-content:center;line-height:1}
+  .sdg-grid-17 .sdg-tx b{display:block;font-size:14px;font-weight:600;color:var(--text);line-height:1.2}
+  .sdg-grid-17 .sdg-tx .zh{display:block;font-family:var(--cjk-sans);font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:.05em}
+  .sdg-grid-17 .sdg-tx .cnt{display:inline-block;margin-top:7px;font-size:11px;font-weight:600;color:var(--jade)}
+  @media(max-width:960px){.sdg-grid-17{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.sdg-grid-17{grid-template-columns:1fr}}
+</style>
+<script src="sdg-data.js"></script>
+<script>
+  (function(){
+    function build(){
+      var el=document.getElementById("home-sdg-grid");
+      if(!el||!window.SDG_META) return;
+      el.innerHTML = window.SDG_META.map(function(m){
+        var c = (window.SDG&&window.SDG.forSDG)? window.SDG.forSDG(m.n).length : 0;
+        var cnt = c>0 ? (c+" project"+(c>1?"s":"")) : "Open for projects";
+        return '<a class="sdg-tile" href="sdg.html?n='+m.n+'">'+
+          '<span class="sdg-num" style="background:'+m.color+'">'+m.n+'</span>'+
+          '<span class="sdg-tx"><b>'+m.name+'</b><span class="zh">'+m.zh+'</span>'+
+          '<span class="cnt">'+cnt+' &rarr;</span></span></a>';
+      }).join("");
+    }
+    if(document.readyState!=="loading") build(); else document.addEventListener("DOMContentLoaded", build);
+  })();
+</script>
 
 <!-- ================= NETWORK (heaven) ================= -->
 <section class="band band-ink on-dark" id="network">
@@ -634,7 +664,7 @@
       <div style="display:flex;align-items:center;gap:18px">
         <span class="foot-seal">赋能<br>基金</span>
         <div>
-          <a class="dom" href="https://www.f-sg.org">www.F-SG.ORG</a>
+          <a class="dom" href="https://www.f-sdg.org">www.F-SDG.ORG</a>
           <div style="margin-top:4px">&copy; 2026 Entrepreneurs SDGs Empowerment Foundation. All rights reserved.</div>
         </div>
       </div>

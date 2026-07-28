@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form · F-SDG Foundation</title>
+<meta name="description" content="Donate, join, enquire or submit a project to the Entrepreneurs SDGs Empowerment Foundation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="styles.css" rel="stylesheet">
+<style>
+  .form-wrap{max-width:820px;margin:0 auto}
+  .ctx-banner{display:flex;flex-wrap:wrap;align-items:center;gap:12px;background:var(--paper-2);border-radius:8px;padding:16px 20px;margin-bottom:24px;font-size:14px}
+  .ctx-banner .pill{background:var(--cinnabar);color:var(--paper);border-radius:2px;padding:4px 12px;font-weight:600;font-size:12px;letter-spacing:.06em}
+  .ctx-banner .sdg-dot{width:14px;height:14px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:6px}
+  .jf-frame{width:100%;border:0;border-radius:10px;background:#fff;min-height:720px;box-shadow:0 10px 40px rgba(10,20,30,.08)}
+  .jf-loading{text-align:center;color:var(--muted);padding:40px;font-size:14px}
+  .form-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
+  .form-tabs a{font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:2px;border:1px solid var(--paper-2);color:var(--muted);transition:.2s}
+  .form-tabs a:hover{border-color:var(--cinnabar);color:var(--cinnabar)}
+  .form-tabs a.active{background:var(--cinnabar);color:var(--paper);border-color:var(--cinnabar)}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="mono">F</span>
+      <span class="bt"><b>F&middot;SDG&nbsp;Foundation</b><span>企业家SDGs赋能基金会</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#mission">Mission</a>
+      <a href="sdgs.html">The 17 Goals</a>
+      <a href="index.html#network">Network</a>
+      <a href="submit.html">Submit a project</a>
+    </nav>
+    <a class="nav-cta" href="index.html#membership">Become a member</a>
+  </div>
+</header>
+
+<section class="band band-paper pagetop">
+  <div class="wrap">
+    <div class="form-wrap">
+      <div class="eyebrow" style="margin-bottom:18px"><span class="seal" id="seal">表</span><span class="zh" id="zh-label">表单</span><span class="en" id="en-label">Form</span></div>
+      <h2 class="sec-title" id="form-title">Form</h2>
+      <p class="sec-lead" id="form-lead" style="margin-bottom:26px"></p>
+
+      <div class="form-tabs" id="form-tabs"></div>
+      <div class="ctx-banner" id="ctx-banner" style="display:none"></div>
+
+      <div class="jf-loading" id="jf-loading">Loading form…</div>
+      <iframe id="jf-frame" class="jf-frame" title="F-SDG form" allow="geolocation; microphone; camera; fullscreen" style="display:none"></iframe>
+
+      <p class="note" id="fallback" style="margin-top:16px"></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div><a class="dom" href="https://www.f-sdg.org">www.F-SDG.ORG</a>
+      <div style="margin-top:6px;font-size:13px">&copy; 2026 Entrepreneurs SDGs Empowerment Foundation.</div></div>
+    <div><a href="sdgs.html" style="color:var(--on-ink-mut)">Browse the 17 goals &rarr;</a></div>
+  </div>
+</footer>
+
+<script src="sdg-data.js"></script>
+<script src="app.js"></script>
+<script>
+(function(){
+  var JF = (window.FSDG_CONFIG && window.FSDG_CONFIG.jotform) || {};
+  var META = {
+    donate:  { seal:"捐", zh:"捐赠", en:"Donation",        title:"Make a donation",       lead:"Support the Foundation's work toward the Global Goals. Your contribution goes where the gaps are widest." },
+    join:    { seal:"加", zh:"加入", en:"Apply to join",    title:"Apply to join a project", lead:"Join our global fellowship as a volunteer, partner, investor, or team member." },
+    enquiry: { seal:"询", zh:"询问", en:"Enquiry",          title:"Enquire about a project", lead:"Ask us anything about a project or the Foundation." },
+    submit:  { seal:"交", zh:"提交", en:"Submit a project",  title:"Submit a new project",   lead:"Propose a project for the Foundation to consider." }
+  };
+  var TABS = [["donate","Donate"],["join","Apply to join"],["enquiry","Enquire"],["submit","Submit a project"]];
+
+  var type = (FSDG.qs("type")||"donate").toLowerCase();
+  if(!META[type]) type = "donate";
+  var sdg = FSDG.qs("sdg"), project = FSDG.qs("project");
+  var m = META[type];
+
+  document.title = m.title + " · F-SDG Foundation";
+  document.getElementById("seal").textContent = m.seal;
+  document.getElementById("zh-label").textContent = m.zh;
+  document.getElementById("en-label").textContent = m.en;
+  document.getElementById("form-title").textContent = m.title;
+  document.getElementById("form-lead").textContent = m.lead;
+
+  // tabs
+  document.getElementById("form-tabs").innerHTML = TABS.map(function(t){
+    var q = "?type="+t[0] + (sdg?("&sdg="+encodeURIComponent(sdg)):"") + (project?("&project="+encodeURIComponent(project)):"");
+    return '<a href="form.html'+q+'"'+(t[0]===type?' class="active"':'')+'>'+t[1]+'</a>';
+  }).join("");
+
+  // context banner
+  if(sdg || project){
+    var meta = null;
+    if(sdg){ var num = parseInt(String(sdg).replace(/\D/g,""),10); meta = window.SDG.meta(num); }
+    var b = document.getElementById("ctx-banner");
+    b.style.display = "flex";
+    b.innerHTML = '<span class="pill">In context</span>' +
+      (meta? '<span><span class="sdg-dot" style="background:'+meta.color+'"></span><b>SDG '+meta.n+' — '+FSDG.esc(meta.name)+'</b></span>':'') +
+      (project? '<span style="color:var(--muted)">Project: '+FSDG.esc(project)+'</span>':'');
+  }
+
+  // build the Jotform iframe src (+ prefill query so the submission is tagged)
+  var id = JF[type];
+  var frame = document.getElementById("jf-frame");
+  var loading = document.getElementById("jf-loading");
+  var fallback = document.getElementById("fallback");
+
+  if(!id){
+    loading.style.display="none";
+    fallback.innerHTML = "This form isn't configured yet.";
+    return;
+  }
+
+  var pre = [];
+  if(sdg){ var mm = window.SDG.meta(parseInt(String(sdg).replace(/\D/g,""),10)); pre.push("sdg="+encodeURIComponent(mm? ("SDG "+mm.n+" — "+mm.name):sdg)); }
+  if(project){ pre.push("project="+encodeURIComponent(project)); }
+  var src = "https://form.jotform.com/"+id + (pre.length? ("?"+pre.join("&")) : "");
+
+  frame.src = src;
+  frame.onload = function(){ loading.style.display="none"; frame.style.display="block"; };
+  // safety: reveal after 2.5s even if onload is quirky in some browsers
+  setTimeout(function(){ if(frame.style.display==="none"){ loading.style.display="none"; frame.style.display="block"; } }, 2500);
+  fallback.innerHTML = 'Trouble viewing the form? <a href="'+src+'" target="_blank" style="color:var(--cinnabar);font-weight:600">Open it in a new tab &rarr;</a>';
+})();
+</script>
+</body>
+</html>

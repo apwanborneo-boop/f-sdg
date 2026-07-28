@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add a project · F-SDG Foundation</title>
+<meta name="description" content="Input an SDG project. It appears instantly on its goal page; export to publish for everyone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="styles.css" rel="stylesheet">
+<style>
+  .form-card{background:var(--paper);border:1px solid var(--paper-2);border-radius:10px;padding:34px;max-width:720px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:560px){.grid2{grid-template-columns:1fr}}
+  .yn{display:flex;gap:22px;margin-top:6px}
+  .yn label{display:flex;align-items:center;gap:8px;font-weight:500;font-size:15px}
+  .added{margin-top:26px}
+  .added-item{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--paper);border:1px solid var(--paper-2);border-radius:6px;padding:12px 16px;margin-bottom:8px;font-size:14px}
+  .added-item a{color:var(--cinnabar);font-weight:600}
+  .toolbar{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="mono">F</span>
+      <span class="bt"><b>F&middot;SDG&nbsp;Foundation</b><span>企业家SDGs赋能基金会</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#mission">Mission</a>
+      <a href="sdgs.html">The 17 Goals</a>
+      <a href="index.html#network">Network</a>
+      <a href="submit.html">Submit a project</a>
+    </nav>
+    <a class="nav-cta" href="index.html#membership">Become a member</a>
+  </div>
+</header>
+
+<section class="band band-paper pagetop">
+  <div class="wrap">
+    <div class="eyebrow" style="margin-bottom:22px"><span class="seal">录</span><span class="zh">录入</span><span class="en">Add / input a project</span></div>
+    <h2 class="sec-title">Input an SDG project</h2>
+    <p class="sec-lead">Fill this in and the project appears immediately on its goal page in this browser. To publish it for <em>all</em> visitors, use <b>Export data</b> at the bottom and upload the file to the repository.</p>
+
+    <div class="form-card" style="margin-top:36px">
+      <form id="proj-form">
+        <label class="fl">a) Related SDG</label>
+        <select class="inp" name="sdg" id="sdg-select" required></select>
+
+        <div class="grid2" style="margin-top:4px">
+          <div><label class="fl">Project title</label><input class="inp" name="title" required placeholder="e.g. Solar Project — Thailand"></div>
+          <div><label class="fl">Location</label><input class="inp" name="location" placeholder="Country / region"></div>
+        </div>
+
+        <label class="fl">b1) Description</label>
+        <textarea class="inp" name="description" required placeholder="What the project does and who it serves."></textarea>
+
+        <label class="fl">b2) KPI</label>
+        <input class="inp" name="kpi" placeholder="What you will measure — e.g. MWp installed, households reached">
+
+        <div class="grid2">
+          <div><label class="fl">b3) Revenue (USD)</label><input class="inp" name="revenue" type="number" min="0" placeholder="0"></div>
+          <div><label class="fl">b5) Welcome to join?</label>
+            <div class="yn">
+              <label><input type="radio" name="welcome" value="yes" checked> Yes</label>
+              <label><input type="radio" name="welcome" value="no"> No</label>
+            </div>
+          </div>
+        </div>
+
+        <label class="fl">b4) What is returned for a donation</label>
+        <textarea class="inp" name="donationReturn" placeholder="Recognition, impact reports, naming rights, site visits…"></textarea>
+
+        <div class="toolbar">
+          <button type="submit" class="btn btn-primary btn-sm">Add project</button>
+          <button type="reset" class="btn btn-ghost btn-sm">Clear</button>
+        </div>
+        <div class="note" id="form-note"></div>
+      </form>
+    </div>
+
+    <div class="added" id="added-wrap" style="display:none">
+      <h2 class="sec-title" style="font-size:24px;margin-top:44px">Projects you've added in this browser</h2>
+      <p class="sec-lead" style="margin-top:8px;margin-bottom:18px">These are stored locally. Export and upload to make them permanent for everyone.</p>
+      <div id="added-list"></div>
+      <div class="toolbar">
+        <button class="btn btn-gold btn-sm" onclick="SDG.exportDataFile()">Export data (download seed-projects.js)</button>
+        <button class="btn btn-ghost btn-sm" onclick="if(confirm('Clear all locally-added projects?')){localStorage.removeItem('fsdg_projects_v1');location.reload();}">Clear local additions</button>
+      </div>
+      <p class="note">To publish: open <b>sdg-data.js</b>, replace its <code>window.SEED_PROJECTS = [ … ]</code> block with the contents of the downloaded <b>seed-projects.js</b>, then re-upload <b>sdg-data.js</b> to the GitHub repo.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div><a class="dom" href="https://www.f-sdg.org">www.F-SDG.ORG</a>
+      <div style="margin-top:6px;font-size:13px">&copy; 2026 Entrepreneurs SDGs Empowerment Foundation.</div></div>
+    <div><a href="sdgs.html" style="color:var(--on-ink-mut)">Browse the 17 goals &rarr;</a></div>
+  </div>
+</footer>
+
+<script src="sdg-data.js"></script>
+<script src="app.js"></script>
+<script>
+  // populate SDG dropdown
+  document.getElementById("sdg-select").innerHTML = SDG_META.map(function(m){
+    return '<option value="'+m.n+'">SDG '+m.n+' — '+m.name+'</option>';
+  }).join("");
+
+  function renderAdded(){
+    var local = SDG.loadLocal();
+    var wrap = document.getElementById("added-wrap");
+    if(local.length===0){ wrap.style.display="none"; return; }
+    wrap.style.display="block";
+    document.getElementById("added-list").innerHTML = local.map(function(p){
+      return '<div class="added-item"><span><b>SDG '+p.sdg+'</b> — '+FSDG.esc(p.title)+' <span style="color:var(--muted)">('+FSDG.esc(p.location||"—")+')</span></span>'+
+        '<a href="sdg.html?n='+p.sdg+'">view on goal page &rarr;</a></div>';
+    }).join("");
+  }
+
+  document.getElementById("proj-form").addEventListener("submit", function(e){
+    e.preventDefault();
+    var f = e.target, d = {};
+    new FormData(f).forEach(function(v,k){ d[k]=v; });
+    var saved = SDG.addLocal({
+      sdg:Number(d.sdg), title:d.title, location:d.location||"",
+      description:d.description||"", kpi:d.kpi||"",
+      revenue:Number(d.revenue||0), donationReturn:d.donationReturn||"",
+      welcome:(d.welcome==="yes")
+    });
+    var note = document.getElementById("form-note");
+    if(saved){
+      note.innerHTML = '<div class="ok-msg">Added! It now appears on <a href="sdg.html?n='+saved.sdg+'" style="color:var(--jade);font-weight:600">SDG '+saved.sdg+'\u2019s page</a>. Remember to Export to publish for everyone.</div>';
+      f.reset(); renderAdded();
+    } else {
+      note.innerHTML = '<div class="note" style="color:var(--cinnabar)">Could not save locally (browser storage blocked).</div>';
+    }
+  });
+
+  renderAdded();
+</script>
+</body>
+</html>
