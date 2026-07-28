@@ -79,6 +79,8 @@ section{position:relative}
 .band-ink .sdg-tile{background:var(--ink-2);border-color:var(--ink-line)}
 .sdg-tile:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(10,20,30,.14);border-color:rgba(194,162,76,.5)}
 .sdg-num{width:52px;height:52px;flex:none;border-radius:8px;color:#fff;font-family:var(--serif);font-weight:600;font-size:24px;display:flex;align-items:center;justify-content:center;line-height:1}
+img.sdg-num.sdg-ico{border-radius:8px;object-fit:cover;background:transparent}
+img.badge.badge-ico{width:84px;height:84px;border-radius:12px;object-fit:cover;box-shadow:none;background:transparent}
 .sdg-tx b{display:block;font-size:15px;font-weight:600;color:var(--text);line-height:1.25}
 .band-ink .sdg-tx b{color:var(--on-ink)}
 .sdg-tx .zh{display:block;font-family:var(--cjk-sans);font-size:12px;color:var(--muted);margin-top:3px;letter-spacing:.06em}

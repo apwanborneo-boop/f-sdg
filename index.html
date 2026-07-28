@@ -548,12 +548,14 @@
   .sdg-grid-17 .sdg-tile{display:flex;gap:14px;align-items:flex-start;background:var(--paper);border:1px solid var(--paper-2);border-radius:6px;padding:16px 18px;transition:transform .25s,box-shadow .25s,border-color .25s;text-decoration:none}
   .sdg-grid-17 .sdg-tile:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(10,20,30,.14);border-color:rgba(194,162,76,.5)}
   .sdg-grid-17 .sdg-num{width:46px;height:46px;flex:none;border-radius:8px;color:#fff;font-family:var(--serif);font-weight:600;font-size:21px;display:flex;align-items:center;justify-content:center;line-height:1}
+  .sdg-grid-17 img.sdg-num.sdg-ico{object-fit:cover;background:transparent}
   .sdg-grid-17 .sdg-tx b{display:block;font-size:14px;font-weight:600;color:var(--text);line-height:1.2}
   .sdg-grid-17 .sdg-tx .zh{display:block;font-family:var(--cjk-sans);font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:.05em}
   .sdg-grid-17 .sdg-tx .cnt{display:inline-block;margin-top:7px;font-size:11px;font-weight:600;color:var(--jade)}
   @media(max-width:960px){.sdg-grid-17{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:560px){.sdg-grid-17{grid-template-columns:1fr}}
 </style>
+<script src="sdg-icons.js"></script>
 <script src="sdg-data.js"></script>
 <script>
   (function(){
@@ -563,8 +565,11 @@
       el.innerHTML = window.SDG_META.map(function(m){
         var c = (window.SDG&&window.SDG.forSDG)? window.SDG.forSDG(m.n).length : 0;
         var cnt = c>0 ? (c+" project"+(c>1?"s":"")) : "Open for projects";
-        return '<a class="sdg-tile" href="sdg.html?n='+m.n+'">'+
-          '<span class="sdg-num" style="background:'+m.color+'">'+m.n+'</span>'+
+        var ic = window.SDG_ICONS && window.SDG_ICONS[m.n];
+        var icon = ic
+          ? '<img class="sdg-num sdg-ico" src="'+ic+'" alt="SDG '+m.n+' '+m.name+'" loading="lazy">'
+          : '<span class="sdg-num" style="background:'+m.color+'">'+m.n+'</span>';
+        return '<a class="sdg-tile" href="sdg.html?n='+m.n+'">'+ icon +
           '<span class="sdg-tx"><b>'+m.name+'</b><span class="zh">'+m.zh+'</span>'+
           '<span class="cnt">'+cnt+' &rarr;</span></span></a>';
       }).join("");
@@ -670,6 +675,7 @@
       </div>
       <div style="font-family:var(--cjk-serif);letter-spacing:.12em">乾元用九 · 泽被苍生</div>
     </div>
+    <p style="margin-top:20px;font-size:11.5px;color:var(--on-ink-mut);max-width:80ch;line-height:1.6">SDG icons &copy; United Nations. The content of this website has not been approved by the United Nations and does not reflect the views of the United Nations or its officials or Member States. <a href="https://www.un.org/sustainabledevelopment" style="color:var(--gold-soft)">un.org/sustainabledevelopment</a></p>
   </div>
 </footer>
 

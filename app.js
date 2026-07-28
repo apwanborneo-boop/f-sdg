@@ -13,10 +13,10 @@ window.FSDG_CONFIG = {
   contactEmail: "info@f-sdg.org",
   // Jotform forms — each action opens its form, pre-tagged with the SDG/project context.
   jotform: {
-    donate:  "262077627522055",
-    join:    "262078235705054",
-    enquiry: "262078370401047",
-    submit:  "262077971700055"
+    donate:  "262080488114051",
+    join:    "262081329022044",
+    enquiry: "262080606433047",
+    submit:  "262080960645055"
   }
 };
 
@@ -43,6 +43,14 @@ window.FSDG_CONFIG = {
     if(mode==="project-page") renderProjectPage();
   });
 
+  /* ---------- icon helper: real SDG icon, else coloured numbered tile ---------- */
+  function iconMarkup(m, cls){
+    var ic = window.SDG_ICONS && window.SDG_ICONS[m.n];
+    if(ic){ return '<img class="'+cls+' sdg-ico" src="'+ic+'" alt="SDG '+m.n+' '+esc(m.name)+'" loading="lazy">'; }
+    return '<span class="'+cls+'" style="background:'+m.color+'">'+m.n+'</span>';
+  }
+  window.FSDG.iconMarkup = iconMarkup;
+
   /* ---------- render: 17-goal grid ---------- */
   function renderGrid(el){
     if(!el) return;
@@ -50,7 +58,7 @@ window.FSDG_CONFIG = {
       var count = window.SDG.forSDG(m.n).length;
       var cnt = count>0 ? (count+" project"+(count>1?"s":"")) : "Open for projects";
       return '<a class="sdg-tile" href="sdg.html?n='+m.n+'">'+
-        '<span class="sdg-num" style="background:'+m.color+'">'+m.n+'</span>'+
+        iconMarkup(m, "sdg-num")+
         '<span class="sdg-tx"><b>'+esc(m.name)+'</b><span class="zh">'+esc(m.zh)+'</span>'+
         '<span class="cnt">'+cnt+' &rarr;</span></span></a>';
     }).join("");
@@ -69,7 +77,9 @@ window.FSDG_CONFIG = {
       '<div class="wrap">'+
         '<div class="crumbs"><a href="index.html">Home</a><span class="sep">/</span>'+
         '<a href="sdgs.html">The 17 Goals</a><span class="sep">/</span>SDG '+m.n+'</div>'+
-        '<div class="badge">'+m.n+'</div>'+
+        (window.SDG_ICONS&&window.SDG_ICONS[m.n]
+          ? '<img class="badge badge-ico" src="'+window.SDG_ICONS[m.n]+'" alt="SDG '+m.n+'">'
+          : '<div class="badge">'+m.n+'</div>')+
         '<h1>'+esc(m.name)+'</h1>'+
         '<div class="zh">'+esc(m.zh)+'</div>'+
         '<p class="tag">'+esc(m.tag)+'</p>'+
@@ -117,7 +127,9 @@ window.FSDG_CONFIG = {
         '<div class="crumbs"><a href="index.html">Home</a><span class="sep">/</span>'+
         '<a href="sdgs.html">The 17 Goals</a><span class="sep">/</span>'+
         '<a href="sdg.html?n='+m.n+'">SDG '+m.n+'</a><span class="sep">/</span>Project</div>'+
-        '<div class="badge">'+m.n+'</div>'+
+        (window.SDG_ICONS&&window.SDG_ICONS[m.n]
+          ? '<img class="badge badge-ico" src="'+window.SDG_ICONS[m.n]+'" alt="SDG '+m.n+'">'
+          : '<div class="badge">'+m.n+'</div>')+
         '<h1>'+esc(p.title)+'</h1>'+
         '<div class="tag">'+esc(p.location||"")+' &middot; '+esc(m.name)+'</div>'+
       '</div>';
